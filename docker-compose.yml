@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+
+  front:
+    image: muallin/taskui
+    restart: always
+    ports:
+      - 9090:80
+    networks:
+      - tasksnetwork
+    depends_on:
+      - backend
+    links:
+      - "backend:backend"
+
+  backend:
+    image: muallin/taskbackend
+    restart: always
+    ports:
+      - 18080:8080
+      - 18081:8081
+    networks:
+      - tasksnetwork
+    depends_on:
+      - database
+    links:
+      - "database:database"
+
+  database:
+    image: mysql:8
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: tasks
+      MYSQL_USER: tasks
+      MYSQL_PASSWORD: tasks
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    networks:
+      - tasksnetwork
+
+networks:
+  tasksnetwork:
+    name: tasksnetwork

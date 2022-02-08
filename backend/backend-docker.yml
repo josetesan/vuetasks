@@ -1,0 +1,30 @@
+logging:
+  level: INFO
+  loggers:
+    com.josetesan.oracle.rest: INFO
+
+database:
+  # the name of your JDBC driver
+  driverClass: com.mysql.cj.jdbc.Driver
+  # the username
+  user: tasks
+  # the password
+  password: tasks
+  # the JDBC URL
+  url: jdbc:mysql://database/tasks
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 3s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyApplication Health Check */ SELECT 1"
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 30
+
+server:
+  requestLog:
+    appenders: []
