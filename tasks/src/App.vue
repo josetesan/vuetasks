@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
-    <NewTask @create-task="postTask"/>
-    <Tasks @delete-task="deleteTask"/>
+      <NewTask @create-task="postTask"/>
+      <Tasks @delete-task="deleteTask"/>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
       try {
         await fetch(`/api/tasks/${task.id}`, {
           method: "DELETE"
-        });
+        })
       } catch (error) {
         console.error(error);
       }

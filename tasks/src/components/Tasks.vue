@@ -11,7 +11,9 @@
           <p>{{ task.name }}</p>
           <footer class="blockquote-footer">{{ task.dueDate }}</footer>
         </blockquote>
+        <button class="btn btn-danger" @click="$emit('deleteTask', task)">Delete</button>
       </div>
+
     </div>
     <p v-if="loading">
       Still loading ..
@@ -22,8 +24,6 @@
   </div>
   </div>
 </template>
-
-
 
 <script>
 import {onMounted, ref} from "vue";
