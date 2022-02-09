@@ -1,28 +1,25 @@
 <template>
   <div>
     <h1>Tasks</h1>
-    <table class="table table-hover" v-if="!loading && data && data.length">
-      <thead>
-      <tr>
-      <th scope="col">ID</th>
-      <th scope="col">NAME</th>
-      <th scope="col">DUE DATE</th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr v-for="task in data" v-bind:key="task.id">
-        <td><input type="checkbox" value="{{ task.id }}" v-model="checkedTask" /></td>
-        <td>{{ task.name }}</td>
-        <td>{{ task.dueDate }}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="container-sm">
+    <div v-for="task in data" v-bind:key="task.id" class="card">
+      <div class="card-header">
+        Task {{ task.id }}
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>{{ task.name }}</p>
+          <footer class="blockquote-footer">{{ task.dueDate }}</footer>
+        </blockquote>
+      </div>
+    </div>
     <p v-if="loading">
       Still loading ..
     </p>
     <p v-if="error">
       {{ error }}
     </p>
+  </div>
   </div>
 </template>
 
@@ -42,7 +39,7 @@ export default {
 
     function fetchData() {
       loading.value = true;
-      return fetch('http://localhost/api/tasks', {
+      return fetch('/api/tasks', {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
