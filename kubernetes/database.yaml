@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: database
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: database
+    spec:
+      containers:
+        - image: mysql:8
+          name: database
+          resources: {}
+          env:
+            - name: MYSQL_DATABASE
+              value: "tasks"
+            - name: MYSQL_USER
+              value: "tasks"
+            - name: MYSQL_PASSWORD
+              value: "tasks"
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "true"
+      restartPolicy: Always
+status: {}
