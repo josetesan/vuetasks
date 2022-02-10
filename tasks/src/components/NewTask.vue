@@ -1,6 +1,7 @@
 <template>
+  <h1>Tasks</h1>
+  <div class="container">
   <form @submit.prevent="createTask">
-    <div class="container">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" id="name" v-model="task.name" aria-describedby="nameHelp">
@@ -13,10 +14,9 @@
     <button type="submit" class="btn btn-success">
       Create
     </button>`
-    </div>
   </form>
+  </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -37,5 +37,4 @@ export default {
     }
   }
 }
-
 </script>

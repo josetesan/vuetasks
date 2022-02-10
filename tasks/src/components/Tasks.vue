@@ -1,6 +1,4 @@
 <template>
-  <div>
-    <h1>Tasks</h1>
     <div class="container-sm">
     <div v-for="task in data" v-bind:key="task.id" class="card">
       <div class="card-header">
@@ -21,7 +19,6 @@
     <p v-if="error">
       {{ error }}
     </p>
-  </div>
   </div>
 </template>
 
@@ -81,6 +78,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--
 <style scoped>
 h3 {
   margin: 40px 0 0;
@@ -100,3 +98,4 @@ a {
   color: #42b983;
 }
 </style>
+-->
