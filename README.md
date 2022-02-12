@@ -26,7 +26,18 @@ This is the main [REST](https://en.wikipedia.org/wiki/Representational_state_tra
 
 It's done using the [Dropwizard](https://dropwizard.io) framework, following the [Model-View-Controller pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller).
 
-The main 
+The main entry point of the application is the [BackendApplication](backend/src/main/java/com/josetesan/oracle/rest/BackendApplication.java) class, where we do initialise several components of the application, mainly :
+- [Prometheus](https://prometheus.io/) metrics 
+- Liquibase initial database [migration](https://www.dropwizard.io/en/latest/manual/migrations.html)
+- Configure CORS
+- Enable [JDBI3](https://www.dropwizard.io/en/latest/manual/jdbi3.html) database access  and configure it to use [SQLObjects](http://jdbi.org/#_sql_objects) plugin
+
+Once the application has started, it offers the [TaskResource](backend/src/main/java/com/josetesan/oracle/rest/resources/TaskResource.java) , the 'C in the MVC' where we expose the behaviour to the user. 
+Here we do use a [Service](backend/src/main/java/com/josetesan/oracle/rest/service/TaskService.java) class to handle all the business logic, so the `Resource` just is a gateway to it.
+We do expose one GET method (Retrieve all tasks), one POST method ( Create a Task), and one DELETE method ( Delete a Task).
+
+The [Task](backend/src/main/java/com/josetesan/oracle/rest/api/Task.java) is the `M` in the MVC, where we do define the object we are exposing, simply consisting of a name and an endDate attributes. 
+
 
 ### MySql database
 
