@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+User -> Nginx: Request /
+Nginx --> Frontend: Load Tasks
+
+Frontend -> Nginx : Request /api/tasks
+Nginx -> Backend : Load Tasks
+
+Backend -> MySql : retrieve tasks from database
+MySql --> Backend : Tasks
+
+Backend --> Frontend: return tasks
+Frontend -> User: Display tasks
+@enduml
