@@ -3,6 +3,7 @@ package com.josetesan.oracle.rest.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -10,7 +11,9 @@ import java.util.Objects;
 public class Task {
 
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String dueDate;
 
     /** needed for inserts **/
