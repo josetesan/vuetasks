@@ -1,84 +1,43 @@
 <template>
-    <div class="container-sm">
-    <div v-for="task in data" v-bind:key="task.id" class="card">
-      <div class="card-header">
+  <div v-if="tasks">
+    <div v-for="task in tasks" :key="task.id">
         Task {{ task.id }}
-      </div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
+        <blockquote>
           <p>{{ task.name }}</p>
-          <footer class="blockquote-footer">{{ task.dueDate }}</footer>
+          <footer>{{ task.dueDate }}</footer>
         </blockquote>
-        <button class="btn btn-danger" @click="$emit('deleteTask', task)">Delete</button>
-      </div>
-
+        <button @click="$emit('deleteTask', task)">Delete</button>
     </div>
-    <p v-if="loading">
-      Still loading ..
-    </p>
-    <p v-if="error">
-      {{ error }}
-    </p>
+  </div>
+  <div v-else>
+    Still loading ..
   </div>
 </template>
 
 <script>
-import {onMounted, ref} from "vue";
-
 export default {
   name: 'Tasks',
-  props: {
-  },
-  setup() {
-    const data = ref(null);
-    const loading = ref(true);
-    const error = ref(null);
-
-    function fetchData() {
-      loading.value = true;
-      return fetch('/api/tasks', {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      }).then(res => {
-        if (!res.ok) {
-          const error = new Error(res.statusText);
-          error.json = res.json();
-          throw error;
-        }
-        return res.json();
-      }).then(json => {
-        data.value = json;
-      }).catch(err => {
-        console.log(err);
-        error.value = err;
-        if (err.json) {
-          return err.json.then(json => {
-            error.value.message = json.message;
-          });
-        }
-      }).then(() => {
-        loading.value = false;
-      });
-    }
-
-    onMounted(() => {
-      fetchData();
-    });
-
+  data() {
     return {
-      data,
-      loading,
-      error
-    };
+      tasks: []
+    }
+  },
+  mounted() {
+    fetch('/api/tasks',{
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    }).then( res => {
+      return res.json()
+    }).then( json => {
+       tasks.value = json
+    })
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<!--
 <style scoped>
 h3 {
   margin: 40px 0 0;
@@ -98,4 +57,3 @@ a {
   color: #42b983;
 }
 </style>
--->
