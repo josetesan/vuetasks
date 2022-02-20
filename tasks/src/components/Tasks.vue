@@ -6,21 +6,26 @@
           <p>{{ task.name }}</p>
           <footer>{{ task.dueDate }}</footer>
         </blockquote>
-        <button @click="$emit('deleteTask', task)">Delete</button>
+        <button @click="handleDelete(task.id)">Delete</button>
     </div>
   </div>
   <div v-else>
     Still loading ..
   </div>
+  <div v-if="error">  
+    <p class="error">{{ error }}</p>
+  </div>
 </template>
 
 <script>
+
 export default {
   name: 'Tasks',
   data() {
     return {
-      tasks: []
-    }
+      tasks: [],
+      error : ''
+    };
   },
   mounted() {
     fetch('/api/tasks',{
@@ -29,11 +34,21 @@ export default {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       }
-    }).then( res => {
-      return res.json()
-    }).then( json => {
-       tasks.value = json
-    })
+    }).then( async res =>  await res.json())
+      .then( json => this.tasks = json)
+      .catch( err => {
+        this.error = err;
+        console.log(err);
+      })
+  },
+  methods: {
+    handleDelete(id) {
+      fetch(`/api/tasks/${id}`, {
+          method: "DELETE"
+      }).then( () => {
+         this.tasks = this.tasks.filter(task => { return task.id !== id })
+      })
+    }
   }
 }
 </script>
@@ -55,5 +70,9 @@ li {
 
 a {
   color: #42b983;
+}
+
+error {
+  color: red;
 }
 </style>

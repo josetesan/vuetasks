@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
-      <NewTask @create-task="postTask"/>
-      <Tasks @delete-task="deleteTask" />
+      <NewTask/>
+      <Tasks/>
   </div>
 </template>
 
@@ -14,28 +14,6 @@ export default {
   components: {
     NewTask,
     Tasks
-  },
-  methods: {
-    async postTask(task) {
-      try {
-        await fetch('/api/tasks', {
-          method: 'POST',
-          body: JSON.stringify(task),
-          headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async deleteTask(task) {
-      try {
-        await fetch(`/api/tasks/${task.id}`, {
-          method: "DELETE"
-        })
-      } catch (error) {
-        console.error(error);
-      }
-    }
   }
 }
 </script>

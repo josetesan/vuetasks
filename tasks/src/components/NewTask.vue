@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: 'App',
+  name: 'NewTask',
   data() {
     return {
       task: {
@@ -22,11 +22,12 @@ export default {
   },
   methods: {
     createTask() {
-      this.$emit('create-task', this.task);
-      this.task = {
-        name: '',
-        dueDate: ''
-      }
+      fetch('/api/tasks', {
+          method: 'POST',
+          body: JSON.stringify(this.task),
+          headers: { 'Content-type': 'application/json; charset=UTF-8' }
+        }).then(res => console.log(res))
+          .catch (error =>  console.error(error))
     }
   }
 }
